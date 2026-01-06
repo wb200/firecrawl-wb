@@ -12,6 +12,8 @@ Example:
     >>> asyncio.run(main())
 """
 
+from importlib.metadata import PackageNotFoundError, version
+
 from .client import FirecrawlClient
 from .exceptions import (
     AuthenticationError,
@@ -67,7 +69,10 @@ from .models import (
 )
 from .utils import load_api_key
 
-__version__ = "0.2.0"
+try:
+    __version__ = version("firecrawl-wb")
+except PackageNotFoundError:  # pragma: no cover
+    __version__ = "0.0.0"
 __all__ = [
     "ActiveCrawl",
     "ActiveCrawlsResponse",
